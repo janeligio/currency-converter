@@ -1,0 +1,17 @@
+.navigation {
+	text-align: center;
+	background-color: #B3C7D6FF;
+}
+
+.nav-container {
+	height: 75px;
+	font-size: 20px;
+	display: flex;	
+	align-items: stretch;
+}
+.nav-container > * {
+	flex: 1;
+	text-decoration: none;
+	color: white;
+	padding: 1em;
+}

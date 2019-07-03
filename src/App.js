@@ -1,14 +1,25 @@
 import React from 'react';
 import './App.css';
+import Header from './components/Header/Header';
+import Navigation from './components/Navigation/Navigation';
+import { BrowserRouter as Router } from 'react-router-dom';
 
-function App() {
+class App extends React.Component {
+
+render() {
   return (
     <div className="App">
-      <header className="App-header">
-      hello
-      </header>
+    <Header />
+    <Router>
+    <div style={{height:'400px'}}>
+      <p>hi</p>
+    </div>
+    <Navigation />
+    </Router>
     </div>
   );
+}
+
 }
 
 export default App;
