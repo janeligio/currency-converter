@@ -7,18 +7,59 @@ import ConvertTo from './components/Convert/ConvertTo';
 
 class App extends React.Component {
 
-render() {
-  return (
-    <div className="App">
-    <Header />
-    <div className="convert-container">
-    <ConvertFrom className/>
-    <ConvertTo />
-    </div>
-    <Footer />
-    </div>
-  );
-}
+  constructor(props) {
+    super(props);
+    this.state = {
+      base: "USD",
+      amount: 1,
+      convertTo: "EUR",
+      result: .89,
+      currencies: ["USD", "EUR", "JPY", "THB"],
+      currency: {
+        USD: 1,
+        EUR: .89,
+        JPY: 107.82,
+        THB : 30.66
+      }
+    }
+  }
+
+  // currently doesnt do anything with the maths
+  handleSelect = (currencySelected, code) => {
+    this.setState({currencySelected: code})
+  }
+
+  // too much math to hard code it, gone let the api do the work
+  // this is just for now
+  handleInput = (amount) => {
+    let newPrice = amount * .89;
+    this.setState({result: newPrice})
+    this.setState({amount: amount})
+  }
+
+  render() {
+    return (
+      <div className="App">
+        <Header />
+        <div className="convert-container">
+          <ConvertFrom
+              base={this.state.base}
+              currencies={this.state.currencies}
+              amount={this.state.amount}
+              handleSelect={this.handleSelect}
+              handleInput={this.handleInput}
+          />
+          <ConvertTo
+              convertTo={this.state.convertTo}
+              result={this.state.result}
+              currencies={this.state.currencies}
+              handleSelect={this.handleSelect}
+          />
+        </div>
+        <Footer />
+      </div>
+    );
+  }
 
 }
 
