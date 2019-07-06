@@ -1,25 +1,8 @@
 import React from 'react';
 
 class ConvertFrom extends React.Component {
-  state = {
-    amount: 1,
-    base: this.props.base
-  };
-
   componentDidMount() {
     //Todo
-  }
-
-  handleInput = (e) => {
-    e.preventDefault();
-    this.setState({[e.target.name]: e.target.value})
-    this.props.handleInput(this.state.amount)
-  }
-
-  handleSelect = (e) => {
-    e.preventDefault();
-    this.setState({[e.target.name]: e.target.value})
-    this.props.handleSelect("base", this.state.base)
   }
 
   render() {
@@ -45,8 +28,8 @@ class ConvertFrom extends React.Component {
               <form>
                 <select
                     name="base"
-                    value={this.state.base}
-                    onChange={this.handleSelect}
+                    value={this.props.base}
+                    onChange={this.props.handleSelect}
                 >
                   {this.props.currencies.map(currency => (
                       <option key={currency} value={currency}>
@@ -61,8 +44,8 @@ class ConvertFrom extends React.Component {
               <form>
                 <input
                     name="amount"
-                    value={this.state.amount}
-                    onChange={this.handleInput}
+                    value={this.props.amount}
+                    onChange={this.props.handleInput}
                 />
               </form>
             </div>

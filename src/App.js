@@ -31,10 +31,16 @@ class App extends React.Component {
 
   // too much math to hard code it, gone let the api do the work
   // this is just for now
-  handleInput = (amount) => {
-    let newPrice = amount * .89;
-    this.setState({result: newPrice})
-    this.setState({amount: amount})
+  handleInput = (event) => {
+    console.log(event.target);
+    const exchangeRate = this.state.currency.EUR;
+    const base = event.target.value;
+    const convertedRate = exchangeRate * event.target.value;
+    this.setState({amount: base});
+    this.setState({result: convertedRate});
+    // let newPrice = amount * .89;
+    // this.setState({result: newPrice})
+    // this.setState({amount: amount})
   }
 
   render() {
