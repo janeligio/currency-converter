@@ -36,9 +36,9 @@ class App extends React.Component {
       axios.get('https://api.exchangeratesapi.io/latest?base=' + 'currencySelected')
         .then((response) => {
         const rates = response.data.rates
-        //const currencies = // retrieve list of just the currency codes
+        const currencies = null;// retrieve list of just the currency codes
+        this.setState({rates})
       })
-      //this.setState({rates, currencies})
     }
     this.setState({currencySelected: code});
     //this.setState({[event.target.name: event.target.value]});
