@@ -24,8 +24,8 @@ class App extends React.Component {
       .then((response) => {
       const rates = response.data.rates
       const currencies = // retrieve list of currency codes
+      this.setState({rates, currencies})
     })
-    this.setState({rates, currencies})
   }
   
   // currently doesnt do anything with the maths
@@ -35,8 +35,8 @@ class App extends React.Component {
         .then((response) => {
         const rates = response.data.rates
         const currencies = // retrieve list of just the currency codes
+        this.setState({rates, currencies})
       })
-      this.setState({rates, currencies})
     }
     this.setState({currencySelected: code});
     //this.setState({[event.target.name: event.target.value]});
