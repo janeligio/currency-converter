@@ -11,36 +11,52 @@ class App extends React.Component {
     super(props);
     this.state = {
       base: "USD",
-      amount: 1,
+      amount: "",
       convertTo: "EUR",
-      result: .89,
+      result: "",
       currencies: ["USD", "EUR", "JPY", "THB"],
-      currency: {
-        USD: 1,
-        EUR: .89,
-        JPY: 107.82,
-        THB : 30.66
-      }
+      rates: {}
     }
   }
 
+  componentDidMount() {
+    axios.get('https://api.exchangeratesapi.io/latest?base=USD')
+      .then((response) => {
+      const rates = response.data.rates
+      const currencies = // retrieve list of currency codes
+    })
+    this.setState({rates, currencies})
+  }
+  
   // currently doesnt do anything with the maths
   handleSelect = (currencySelected, code) => {
-    this.setState({currencySelected: code})
+    if (currencySelected === "base") {
+      axios.get('https://api.exchangeratesapi.io/latest?base=' + 'currencySelected')
+        .then((response) => {
+        const rates = response.data.rates
+        const currencies = // retrieve list of just the currency codes
+      })
+      this.setState({rates, currencies})
+    }
+    this.setState({currencySelected: code});
+    //this.setState({[event.target.name: event.target.value]});
+    this.calculate();
   }
 
-  // too much math to hard code it, gone let the api do the work
-  // this is just for now
   handleInput = (event) => {
-    console.log(event.target);
-    const exchangeRate = this.state.currency.EUR;
-    const base = event.target.value;
-    const convertedRate = exchangeRate * event.target.value;
-    this.setState({amount: base});
-    this.setState({result: convertedRate});
-    // let newPrice = amount * .89;
-    // this.setState({result: newPrice})
-    // this.setState({amount: amount})
+    //console.log(event.target);
+    //const exchangeRate = this.state.currency.EUR;
+    //const base = event.target.value;
+    //const convertedRate = exchangeRate * event.target.value;
+    //this.setState({amount: base});
+    //this.setState({result: convertedRate});
+    this.setState({amount: event.target.value});
+    this.calculate();
+  }
+  
+  calculate = () => {
+    const result = this.state.amount * this.state.rates[this.state.convertTo];
+    this.setState({result})
   }
 
   render() {
