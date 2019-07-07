@@ -4,6 +4,7 @@ import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
 import ConvertFrom from './components/Convert/ConvertFrom';
 import ConvertTo from './components/Convert/ConvertTo';
+import axios from 'axios';
 
 class App extends React.Component {
 
@@ -23,9 +24,10 @@ class App extends React.Component {
     axios.get('https://api.exchangeratesapi.io/latest?base=USD')
       .then((response) => {
       const rates = response.data.rates
-      const currencies = // retrieve list of currency codes
+      const currencies = null;// retrieve list of currency codes
+      console.log(response);
+      this.setState({rates});
     })
-    this.setState({rates, currencies})
   }
   
   // currently doesnt do anything with the maths
@@ -34,9 +36,9 @@ class App extends React.Component {
       axios.get('https://api.exchangeratesapi.io/latest?base=' + 'currencySelected')
         .then((response) => {
         const rates = response.data.rates
-        const currencies = // retrieve list of just the currency codes
+        //const currencies = // retrieve list of just the currency codes
       })
-      this.setState({rates, currencies})
+      //this.setState({rates, currencies})
     }
     this.setState({currencySelected: code});
     //this.setState({[event.target.name: event.target.value]});
@@ -55,8 +57,9 @@ class App extends React.Component {
   }
   
   calculate = () => {
-    const result = this.state.amount * this.state.rates[this.state.convertTo];
-    this.setState({result})
+    const { amount, rates, convertTo } = this.state;
+    const result = amount * rates[convertTo];
+    this.setState({result});
   }
 
   render() {
