@@ -44,6 +44,7 @@ class ConvertFrom extends React.Component {
               <form>
                 <input
                     name="amount"
+                    type="number"
                     value={this.props.amount}
                     onChange={this.props.handleInput}
                 />

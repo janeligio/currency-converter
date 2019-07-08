@@ -1,18 +1,9 @@
 import React from 'react';
 
 class ConvertTo extends React.Component {
-  state = {
-    convertTo: this.props.convertTo
-  };
 
   componentDidMount() {
     //Todo
-  }
-
-  handleSelect = (e) => {
-    e.preventDefault();
-    this.setState({[e.target.name]: e.target.value})
-    this.props.handleSelect("convertTo", this.state.convertTo);
   }
 
   render() {
@@ -40,8 +31,8 @@ class ConvertTo extends React.Component {
               <form>
                 <select
                     name="convertTo"
-                    value={this.state.convertTo}
-                    onChange={this.handleSelect}
+                    value={this.props.convertTo}
+                    onChange={this.props.handleSelect}
                 >
                   {this.props.currencies.map(currency => (
                       <option key={currency} value={currency}>
@@ -52,8 +43,12 @@ class ConvertTo extends React.Component {
               </form>
             </div>
             <div style={containerChild}>
-              Result:<br/>
-              {this.props.result}
+              <form>
+                <input
+                  disabled={true}
+                  value={this.props.result}
+                />
+              </form>
             </div>
           </div>
         </div>

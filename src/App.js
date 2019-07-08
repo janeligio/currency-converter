@@ -15,7 +15,7 @@ class App extends React.Component {
       amount: "",
       convertTo: "EUR",
       result: "",
-      currencies: ["USD", "EUR", "JPY", "THB"],
+      currencies: [],
       rates: {}
     }
   }
@@ -24,42 +24,51 @@ class App extends React.Component {
     axios.get('https://api.exchangeratesapi.io/latest?base=USD')
       .then((response) => {
       const rates = response.data.rates
-      const currencies = null;// retrieve list of currency codes
-      console.log(response);
-      this.setState({rates});
+      const currencies = Object.keys(rates);
+      console.log(rates)
+      console.log(currencies)
+      this.setState({
+        rates,
+        currencies,
+        amount: 1
+      });
+      this.calculate();
     })
   }
-  
-  // currently doesnt do anything with the maths
-  handleSelect = (currencySelected, code) => {
-    if (currencySelected === "base") {
-      axios.get('https://api.exchangeratesapi.io/latest?base=' + 'currencySelected')
+
+  handleSelect = (event) => {
+    if (event.target.name === "base") {
+      axios.get(`https://api.exchangeratesapi.io/latest?base=${event.target.value}`)
         .then((response) => {
         const rates = response.data.rates
-        const currencies = null;// retrieve list of just the currency codes
-        this.setState({rates})
+        this.setState({rates, base: event.target.value}, () => {this.calculate() })
       })
+    } else {
+      this.setState({
+        [event.target.name]: event.target.value,
+      }, () => {this.calculate() });
     }
-    this.setState({currencySelected: code});
-    //this.setState({[event.target.name: event.target.value]});
-    this.calculate();
+
   }
 
   handleInput = (event) => {
-    //console.log(event.target);
-    //const exchangeRate = this.state.currency.EUR;
-    //const base = event.target.value;
-    //const convertedRate = exchangeRate * event.target.value;
-    //this.setState({amount: base});
-    //this.setState({result: convertedRate});
-    this.setState({amount: event.target.value});
-    this.calculate();
+    this.setState({
+      amount: event.target.value,
+    }, () => {this.calculate() });
   }
   
   calculate = () => {
     const { amount, rates, convertTo } = this.state;
-    const result = amount * rates[convertTo];
-    this.setState({result});
+    if (amount === isNaN){
+      return;
+    } else {
+      const result = (amount * rates[convertTo]).toFixed(3);
+      console.log(result)
+      this.setState({result});
+    }
+    console.log("calculate")
+    console.log(this.state.amount)
+    console.log(this.state.result)
   }
 
   render() {
@@ -79,6 +88,7 @@ class App extends React.Component {
               result={this.state.result}
               currencies={this.state.currencies}
               handleSelect={this.handleSelect}
+              amount={this.state.amount}
           />
         </div>
         <Footer />
