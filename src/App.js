@@ -40,15 +40,13 @@ class App extends React.Component {
     if (event.target.name === "base") {
       axios.get(`https://api.exchangeratesapi.io/latest?base=${event.target.value}`)
         .then((response) => {
-        const rates = response.data.rates
-        this.setState({rates, base: event.target.value}, () => {this.calculate() })
+        const rates = response.data.rates;
+        this.setState({rates}, () => {this.calculate() })
       })
-    } else {
-      this.setState({
-        [event.target.name]: event.target.value,
-      }, () => {this.calculate() });
     }
-
+    this.setState({
+      [event.target.name]: event.target.value
+    }, () => {this.calculate() });
   }
 
   handleInput = (event) => {
@@ -65,10 +63,10 @@ class App extends React.Component {
       const result = (amount * rates[convertTo]).toFixed(3);
       console.log(result)
       this.setState({result});
-    }
-    console.log("calculate")
-    console.log(this.state.amount)
-    console.log(this.state.result)
+      console.log("calculate")
+      console.log(this.state.amount)
+      console.log(this.state.result)   }
+
   }
 
   render() {
