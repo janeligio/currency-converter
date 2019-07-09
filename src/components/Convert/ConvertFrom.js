@@ -18,11 +18,14 @@ class ConvertFrom extends React.Component {
     };
     const containerChild = {
       border: '1px solid black',
-      flex: '1'
+      display: 'flex',
+      flex: '1',
+      alignItems: 'center',
+      justifyContent: 'center'
     };
     return (
         <div style={style}>
-          From
+          <h1>From</h1>
           <div style={container}>
             <div style={containerChild}>
               <form>
@@ -40,7 +43,7 @@ class ConvertFrom extends React.Component {
               </form>
             </div>
             <div style={containerChild}>
-              Price:
+              <p>Price:</p>
               <form>
                 <input
                     name="amount"
