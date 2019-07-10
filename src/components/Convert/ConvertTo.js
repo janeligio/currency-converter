@@ -43,10 +43,11 @@ class ConvertTo extends React.Component {
               </form>
             </div>
             <div style={containerChild}>
+              <img src={`https://www.countryflags.io/${this.props.convertTo.slice(0,2)}/shiny/32.png`} alt="flag"/>
               <form>
                 <input
                   disabled={true}
-                  value={this.props.result}
+                  value={this.props.currencySymbol + " " + this.props.result}
                 />
               </form>
             </div>

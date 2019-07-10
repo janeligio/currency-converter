@@ -16,7 +16,9 @@ class App extends React.Component {
       convertTo: "EUR",
       result: "",
       currencies: [],
-      rates: {}
+      rates: {},
+      currencySymbol: "$",
+      countryName: "    countryName",
     }
   }
 
@@ -25,15 +27,14 @@ class App extends React.Component {
       .then((response) => {
       const rates = response.data.rates
       const currencies = Object.keys(rates);
+      currencies.sort();
       console.log(rates)
       console.log(currencies)
       this.setState({
         rates,
-        currencies,
-        amount: 1
+        currencies
       });
-      this.calculate();
-    })
+    });
   }
 
   handleSelect = (event) => {
@@ -56,9 +57,11 @@ class App extends React.Component {
   }
   
   calculate = () => {
-    const { amount, rates, convertTo } = this.state;
+    const { base, amount, rates, convertTo } = this.state;
     if (amount === isNaN){
       return;
+    } else if (base === convertTo) {
+        this.setState({result: amount});
     } else {
       const result = (amount * rates[convertTo]).toFixed(3);
       console.log(result)
@@ -80,6 +83,8 @@ class App extends React.Component {
               amount={this.state.amount}
               handleSelect={this.handleSelect}
               handleInput={this.handleInput}
+              currencySymbol={this.state.currencySymbol}
+              countryName={this.state.countryName}
           />
           <ConvertTo
               convertTo={this.state.convertTo}
@@ -87,6 +92,8 @@ class App extends React.Component {
               currencies={this.state.currencies}
               handleSelect={this.handleSelect}
               amount={this.state.amount}
+              currencySymbol={this.state.currencySymbol}
+              countryName={this.state.countryName}
           />
         </div>
         <Footer />

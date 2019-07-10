@@ -37,17 +37,18 @@ class ConvertFrom extends React.Component {
                   {this.props.currencies.map(currency => (
                       <option key={currency} value={currency}>
                         {currency}
+                        {this.props.countryName}
                       </option>
                   ))}
                 </select>
               </form>
             </div>
             <div style={containerChild}>
-              <p>Price:</p>
+              <img src={`https://www.countryflags.io/${this.props.base.slice(0,2)}/shiny/32.png`} alt="flag"/>
+              <p>{this.props.currencySymbol}</p>
               <form>
                 <input
                     name="amount"
-                    type="number"
                     value={this.props.amount}
                     onChange={this.props.handleInput}
                 />
